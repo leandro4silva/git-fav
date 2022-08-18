@@ -18,15 +18,35 @@ export class Favorites {
     }
 
     load() {
-        this.entries = []
+        this.entries = JSON.parse(localStorage.getItem('@github-favorites:')) || []
     }
 
     async add(username){
-        const user = await GithubFavorites.search(username)
+        try{
+            const userExist = this.entries.find((user) => username == user.login)
+            
+            if(userExist){
+                throw new Error('Esse usuario já foi favoritado')
+            }
 
-        this.entries = [user, ...this.entries]
+            const user = await GithubFavorites.search(username)
 
-        this.update()
+            if(user.login == undefined){
+                throw new Error('Usuario não encontrado')
+            }
+    
+            this.entries = [user, ...this.entries]
+    
+            this.update()
+            this.save()
+
+        }catch(error){
+            alert(error.message)
+        }
+    }
+
+    save(){
+        localStorage.setItem('@github-favorites:', JSON.stringify(this.entries))
     }
 
     delete(user){
@@ -35,6 +55,7 @@ export class Favorites {
         this.entries = filterEntries
 
         this.update()
+        this.save()
     }
 }
 
@@ -62,7 +83,7 @@ export class FavoritesView extends Favorites {
             const tr = this.createTr()
             tr.querySelector('.user img').src = `https://github.com/${user.login}.png`
             tr.querySelector('.user p').textContent = user.name
-            tr.querySelector('.user span').textContent = user.login
+            tr.querySelector('.user span').textContent = `/${user.login}`
             tr.querySelector('.repositores').textContent = user.public_repos
             tr.querySelector('.followers').textContent = user.followers
 
@@ -83,9 +104,10 @@ export class FavoritesView extends Favorites {
         const addButton = document.querySelector('.search button')
 
         addButton.onclick = () =>{
-            
-            const { value } = this.root.querySelector('.search input')
-
+            const searchInput = this.root.querySelector('.search input')
+            const { value } = searchInput
+            searchInput.value = ''
+        
             this.add(value)
         }
     }
@@ -105,7 +127,7 @@ export class FavoritesView extends Favorites {
         <td class="repositores">123</td>
         <td class="followers">1234</td>
         <td class="remove">
-            <button class="btn-remove"> &times; </button>
+            <button class="btn-remove"> <span>&times;</span> Remover </button>
         </td>
         `
         return tr

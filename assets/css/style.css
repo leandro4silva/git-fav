@@ -72,7 +72,7 @@ header .search input{
 
 
 header .search input:focus{
-    outline: 1px solid #4A808C;
+    outline: 2px solid #4A808C;
 }
 
 header .search button{
@@ -82,6 +82,17 @@ header .search button{
     width: 7rem;
     border-radius: .5rem;
     cursor: pointer;
+
+    transition: background .3s;
+}
+
+header .search button:hover{
+    background-color: white;
+    color: #065E7C;   
+}
+
+header .search button:hover svg path{
+    fill: #065E7C;
 }
 
 
@@ -112,7 +123,7 @@ thead tr{
 thead tr th{
     text-align: left;   
     font-weight: 700;
-    font-size: 1.7rem;
+    font-size: clamp(.9rem, .9rem + 1vw, 1.7rem);
     padding-block: 1.5rem;
     padding-inline: .9rem;
 }
@@ -128,14 +139,17 @@ table tbody{
     height: 38rem;
 }
 
-table th:first-child,
+table th:first-child{
+    width: clamp(0rem, 9rem + 12vw, 15rem);
+}
+
 table td:first-child{
-    width: 15rem;
+    width: clamp(8rem, 8rem + 12vw, 15rem);
 }
 
 table th, table td {
     text-align: left;
-    width: 10rem
+    width: clamp(9rem, 9rem + 12vw, 15rem);
 }
 
 
@@ -229,15 +243,163 @@ table td.empty-table:first-child{
 }
 
 .remove .btn-remove{
-    width: 4rem;
-    height: 4rem;
-    font-size: 2.5rem;
-    color: red;
+    font-size: 0;
     background: transparent;
     border: none;
     cursor: pointer;
 }
 
+.remove .btn-remove span{
+    width: 4rem;
+    height: 4rem;
+    font-size: 2.5rem;
+    color: red;
+}
+
 .btn-remove:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
+}
+
+@media (min-width: 1024px) {
+
+    #app{
+        width: min(112rem, 100%);
+        padding-inline: 2.4rem;
+        margin-inline: auto;
+        
+    }
+
+    header{
+        margin-block: 0;
+        margin-bottom: 4.7rem;
+        margin-top: 7rem;
+    }
+
+    header{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    header .search input{
+        width: 46.2rem;
+        height: 4.8rem;
+        font-size: 1.6rem;
+    }
+
+    header .search{
+        width: initial;
+    }
+
+    header .search button{
+        display: flex;
+        justify-content: center;
+        gap: .8rem;
+        align-items: center;
+        font: 700 1.4rem 'Roboto',sans-serif;
+        color: white;
+        width: 17rem;
+    }
+
+    table th{
+        height: 6.4rem;
+       
+    }
+
+    thead tr th{
+        padding-block: 1.6rem;
+    }
+
+
+    table th:first-child,
+    table td:first-child{
+        width: clamp(41rem, 41rem + 7vw, 50rem);
+        padding-left: 4rem;
+    }
+
+    table th:last-child,
+    table td:last-child{
+        width: clamp(11rem, 11rem + 5vw, 17rem);
+    }
+    
+    table th, table td {
+        text-align: left;
+        width: clamp(18rem, 18rem + 10vw, 20.5rem);
+    }
+
+    tbody tr td{
+        padding-inline: 1rem;
+        padding-block: 2.8rem;
+    }
+
+    .user{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.6rem;
+    }
+
+    .user a p{
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 3.2rem;
+    }
+
+    .user a span{
+        font-size: 2rem;
+        line-height: 3.2rem;
+    }
+
+    table td{
+        font-size: 2rem;
+    }
+
+    thead tr th{
+        font-size: 2rem;
+    }
+
+    .remove .btn-remove{
+        font: 700 2rem 'Roboto',sans-serif;
+        color: #F75A68;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .remove .btn-remove span{
+        display: none;
+    }
+
+    table td.empty-table:first-child{
+        text-align: center;
+        width: 112rem;
+        height: 38rem;
+    }
+
+    .empty-table .content{
+        gap: 6rem;
+    
+    }
+    
+    .empty-table .content img{
+        width: clamp(12.2rem, 12.2rem + 10vw, 13.2rem);
+        height: clamp(11.5rem, 11.5rem + 10vw, 12.3rem);
+    }
+    
+    .empty-table .content h2{
+        font-size: clamp(3.4rem, 3.4rem +  5vw, 4rem);
+        color: hsla(189, 4%, 32%, 1);
+    }
+
+
+
+    
+}
+
+
+@media (min-width: 1400px) {
+    header{
+        margin-block: 0;
+        margin-bottom: 8.7rem;
+        margin-top: 13rem;
+    }
 }
