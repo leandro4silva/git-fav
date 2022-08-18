@@ -65,9 +65,14 @@ header .search input{
     border: none;
     background-color: var(--bg-input);
     padding: 1.6rem;
-    color: var(--text-color);
+    color: white;
     line-height: 1.6rem;
     font-size: clamp(1.39rem, 0rem + 1vw, 1.8rem);
+}
+
+
+header .search input::placeholder{
+    color: var(--text-color);
 }
 
 

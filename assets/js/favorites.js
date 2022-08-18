@@ -82,6 +82,8 @@ export class FavoritesView extends Favorites {
         this.entries.forEach((user) => {
             const tr = this.createTr()
             tr.querySelector('.user img').src = `https://github.com/${user.login}.png`
+            tr.querySelector('.user img').alt = `Imagem de ${user.name}`
+            tr.querySelector('.user a').href = `https://github.com/${user.login}`
             tr.querySelector('.user p').textContent = user.name
             tr.querySelector('.user span').textContent = `/${user.login}`
             tr.querySelector('.repositores').textContent = user.public_repos
@@ -102,14 +104,23 @@ export class FavoritesView extends Favorites {
 
     onadd(){
         const addButton = document.querySelector('.search button')
-
-        addButton.onclick = () =>{
-            const searchInput = this.root.querySelector('.search input')
-            const { value } = searchInput
-            searchInput.value = ''
+        const searchInput = this.root.querySelector('.search input')
         
+        addButton.onclick = () =>{
+            const { value } = searchInput
             this.add(value)
+            searchInput.value = ''
         }
+
+        searchInput.onkeypress = (e) => {
+            const { value } = searchInput
+            
+            if(e.key == 'Enter') {
+                this.add(value)
+                searchInput.value = ''
+            } 
+        }
+        
     }
 
     createTr() {
